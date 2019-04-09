@@ -48,3 +48,27 @@ npm run prisma -- init
 # stage
 # Prisma Client - Don't generate
 ```
+
+
+Mutation example
+
+```qraphql
+mutation createUser {
+  createUser(name: "UserName", email: "email@mail") {
+    id
+    email
+  }
+}
+```
+
+Query example
+
+```qraphql
+query getUsers {
+  users {
+    id
+    name
+    email
+  }
+}
+```

@@ -8,6 +8,16 @@ const Mutations = {
     );
 
     return user;
+  },
+  async createShopItem(parent, args, ctx, info) {
+    const shopItem = await ctx.db.mutation.createShopItem(
+      {
+        data: { ...args }
+      },
+      info
+    );
+
+    return shopItem;
   }
 };
 

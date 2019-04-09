@@ -2,8 +2,10 @@
 
 type Mutation {
   createUser(name: String!, email: String!): User!
+  createShopItem(title: String!): ShopItem!
 }
 
 type Query {
   users: [User]!
+  shopItems: [ShopItem]!
 }

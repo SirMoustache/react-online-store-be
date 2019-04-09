@@ -1,5 +1,9 @@
 # source: https://eu1.prisma.sh/vitaliy-dc2f4c/react-online-store-be/dev
-# timestamp: Tue Mar 26 2019 22:38:20 GMT+0200 (Финляндия (зима))
+# timestamp: Tue Apr 09 2019 23:12:39 GMT+0300 (Финляндия (лето))
+
+type AggregateShopItem {
+  count: Int!
+}
 
 type AggregateUser {
   count: Int!
@@ -18,11 +22,17 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createShopItem(data: ShopItemCreateInput!): ShopItem!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateShopItem(data: ShopItemUpdateInput!, where: ShopItemWhereUniqueInput!): ShopItem
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteShopItem(where: ShopItemWhereUniqueInput!): ShopItem
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertShopItem(where: ShopItemWhereUniqueInput!, create: ShopItemCreateInput!, update: ShopItemUpdateInput!): ShopItem!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyShopItems(data: ShopItemUpdateManyMutationInput!, where: ShopItemWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyShopItems(where: ShopItemWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -54,8 +64,11 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  shopItems(where: ShopItemWhereInput, orderBy: ShopItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ShopItem]!
   user(where: UserWhereUniqueInput!): User
+  shopItem(where: ShopItemWhereUniqueInput!): ShopItem
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  shopItemsConnection(where: ShopItemWhereInput, orderBy: ShopItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShopItemConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -64,8 +77,196 @@ type Query {
   ): Node
 }
 
+type ShopItem implements Node {
+  id: ID!
+  title: String!
+}
+
+"""A connection to a list of items."""
+type ShopItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ShopItemEdge]!
+  aggregate: AggregateShopItem!
+}
+
+input ShopItemCreateInput {
+  id: ID
+  title: String!
+}
+
+"""An edge in a connection."""
+type ShopItemEdge {
+  """The item at the end of the edge."""
+  node: ShopItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ShopItemOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ShopItemPreviousValues {
+  id: ID!
+  title: String!
+}
+
+type ShopItemSubscriptionPayload {
+  mutation: MutationType!
+  node: ShopItem
+  updatedFields: [String!]
+  previousValues: ShopItemPreviousValues
+}
+
+input ShopItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ShopItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ShopItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ShopItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ShopItemWhereInput
+}
+
+input ShopItemUpdateInput {
+  title: String
+}
+
+input ShopItemUpdateManyMutationInput {
+  title: String
+}
+
+input ShopItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ShopItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ShopItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ShopItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+}
+
+input ShopItemWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  shopItem(where: ShopItemSubscriptionWhereInput): ShopItemSubscriptionPayload
 }
 
 type User implements Node {

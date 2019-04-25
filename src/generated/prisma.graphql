@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/vitaliy-dc2f4c/react-online-store-be/dev
-# timestamp: Tue Apr 09 2019 23:12:39 GMT+0300 (Финляндия (лето))
+# timestamp: Thu Apr 25 2019 19:03:56 GMT+0300 (Eastern European Summer Time)
 
 type AggregateShopItem {
   count: Int!
@@ -13,6 +13,8 @@ type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
+
+scalar DateTime
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -80,6 +82,10 @@ type Query {
 type ShopItem implements Node {
   id: ID!
   title: String!
+  preview: String!
+  largePreview: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -95,6 +101,8 @@ type ShopItemConnection {
 input ShopItemCreateInput {
   id: ID
   title: String!
+  preview: String!
+  largePreview: String!
 }
 
 """An edge in a connection."""
@@ -111,6 +119,10 @@ enum ShopItemOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  preview_ASC
+  preview_DESC
+  largePreview_ASC
+  largePreview_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -120,6 +132,10 @@ enum ShopItemOrderByInput {
 type ShopItemPreviousValues {
   id: ID!
   title: String!
+  preview: String!
+  largePreview: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
 type ShopItemSubscriptionPayload {
@@ -163,10 +179,14 @@ input ShopItemSubscriptionWhereInput {
 
 input ShopItemUpdateInput {
   title: String
+  preview: String
+  largePreview: String
 }
 
 input ShopItemUpdateManyMutationInput {
   title: String
+  preview: String
+  largePreview: String
 }
 
 input ShopItemWhereInput {
@@ -258,6 +278,130 @@ input ShopItemWhereInput {
 
   """All values not ending with the given string."""
   title_not_ends_with: String
+  preview: String
+
+  """All values that are not equal to given value."""
+  preview_not: String
+
+  """All values that are contained in given list."""
+  preview_in: [String!]
+
+  """All values that are not contained in given list."""
+  preview_not_in: [String!]
+
+  """All values less than the given value."""
+  preview_lt: String
+
+  """All values less than or equal the given value."""
+  preview_lte: String
+
+  """All values greater than the given value."""
+  preview_gt: String
+
+  """All values greater than or equal the given value."""
+  preview_gte: String
+
+  """All values containing the given string."""
+  preview_contains: String
+
+  """All values not containing the given string."""
+  preview_not_contains: String
+
+  """All values starting with the given string."""
+  preview_starts_with: String
+
+  """All values not starting with the given string."""
+  preview_not_starts_with: String
+
+  """All values ending with the given string."""
+  preview_ends_with: String
+
+  """All values not ending with the given string."""
+  preview_not_ends_with: String
+  largePreview: String
+
+  """All values that are not equal to given value."""
+  largePreview_not: String
+
+  """All values that are contained in given list."""
+  largePreview_in: [String!]
+
+  """All values that are not contained in given list."""
+  largePreview_not_in: [String!]
+
+  """All values less than the given value."""
+  largePreview_lt: String
+
+  """All values less than or equal the given value."""
+  largePreview_lte: String
+
+  """All values greater than the given value."""
+  largePreview_gt: String
+
+  """All values greater than or equal the given value."""
+  largePreview_gte: String
+
+  """All values containing the given string."""
+  largePreview_contains: String
+
+  """All values not containing the given string."""
+  largePreview_not_contains: String
+
+  """All values starting with the given string."""
+  largePreview_starts_with: String
+
+  """All values not starting with the given string."""
+  largePreview_not_starts_with: String
+
+  """All values ending with the given string."""
+  largePreview_ends_with: String
+
+  """All values not ending with the given string."""
+  largePreview_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
 }
 
 input ShopItemWhereUniqueInput {
@@ -273,6 +417,8 @@ type User implements Node {
   id: ID!
   name: String!
   email: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -317,6 +463,8 @@ type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -497,6 +645,50 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   email_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
 }
 
 input UserWhereUniqueInput {

@@ -2,7 +2,11 @@
 
 type Mutation {
   createUser(name: String!, email: String!): User!
-  createShopItem(title: String!): ShopItem!
+  createShopItem(
+    title: String!
+    preview: String!
+    largePreview: String!
+  ): ShopItem!
 }
 
 type Query {
